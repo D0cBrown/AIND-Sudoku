@@ -3,11 +3,15 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: The constraint says that no squares outside the two naked twins squares can contain the twin values.
+The function that solves this problem, browse all units (**unitlist**), selecting the boxes that have only two possible choice.
+These are grouped according to the values in the box, and, if there are two squares with the same values, they will be deleted from all other ambiguous boxes available in the same unit
+
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: I added new set of units, called diagonal_units, composed of the main diagonal.
+Adding this new set to avalaible units (**unitlist**), there is no need to update other code, in fact, the constraints are automatically applied.
 
 ### Install
 

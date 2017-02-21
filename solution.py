@@ -158,10 +158,10 @@ square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','45
 
 diagonal_unit = [rows[i]+cols[i] for i  in range(0,9) ]
 inverse_diagonal_unit = [rows[i]+cols[(len(cols)-i-1)] for i in range(0,9) ]
-diagonals=[]
-diagonals.append(diagonal_unit)
-diagonals.append(inverse_diagonal_unit)
-unitlist = row_units + column_units + square_units + diagonals
+diagonal_units=[]
+diagonal_units.append(diagonal_unit)
+diagonal_units.append(inverse_diagonal_unit)
+unitlist = row_units + column_units + square_units + diagonal_units
 
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
