@@ -6,6 +6,7 @@ Q: How do we use constraint propagation to solve the naked twins problem?
 A: The constraint says that no squares outside the two naked twins squares can contain the twin values.
 The function that solves this problem, browse all units (**unitlist**), selecting the boxes that have only two possible choice.
 These are grouped according to the values in the box, and, if there are two squares with the same values, they will be deleted from all other ambiguous boxes available in the same unit
+I put the call to naked_twins function reduce_puzzle
 
 
 # Question 2 (Diagonal Sudoku)
