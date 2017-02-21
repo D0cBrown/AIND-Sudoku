@@ -1,3 +1,5 @@
+from collections import Counter
+
 assignments = []
 
 def assign_value(values, box, value):
@@ -20,9 +22,20 @@ def naked_twins(values):
     """
 
     # Find all instances of naked twins
-
-    # Eliminate the naked twins as possibilities for their peers
-
+    for unit in unitlist:
+        dplaces = [(values[box],box) for box in unit if len(values[box])==2]
+        result_dict = {}
+        for x in dplaces:
+            result_dict.setdefault(x[0], []).append(x[1])
+	# Eliminate the naked twins as possibilities for their peers
+        for value in result_dict.keys():
+            if len(result_dict[value]) > 1:
+                for digit in value:
+                    for box in unit:
+                        if len(values[box]) > 1 and box not in result_dict[value]:
+                            values[box]=values[box].replace(digit,"")
+    return values
+	
 def cross(A, B):
     return [s+t for s in A for t in B]
 
@@ -84,6 +97,7 @@ def reduce_puzzle(values):
         solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
         values = eliminate(values)
         values = only_choice(values)
+        values = naked_twins(values)
         solved_values_after = len([box for box in values.keys() if len(values[box]) == 1])
         stalled = solved_values_before == solved_values_after
         if len([box for box in values.keys() if len(values[box]) == 0]):
@@ -142,10 +156,12 @@ column_units = [cross(rows, c) for c in cols]
 
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
 
-diagonal_unit = [rows[i]+cols[i] for i  in range(1,10) ]
-inverse_diagonal_unit = [rows[i]+cols[i] for i  in range(1,-10) ]
-
-unitlist = row_units + column_units + square_units
+diagonal_unit = [rows[i]+cols[i] for i  in range(0,9) ]
+inverse_diagonal_unit = [rows[i]+cols[(len(cols)-i-1)] for i in range(0,9) ]
+diagonals=[]
+diagonals.append(diagonal_unit)
+diagonals.append(inverse_diagonal_unit)
+unitlist = row_units + column_units + square_units + diagonals
 
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
